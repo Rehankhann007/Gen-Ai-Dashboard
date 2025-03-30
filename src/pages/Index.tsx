@@ -11,7 +11,22 @@ import {
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, LineChart, Line, PieChart, Pie, Cell, AreaChart, Area } from "recharts";
+import { 
+  BarChart, 
+  Bar, 
+  XAxis, 
+  YAxis, 
+  CartesianGrid, 
+  Tooltip as RechartsTooltip, 
+  ResponsiveContainer, 
+  LineChart, 
+  Line, 
+  PieChart, 
+  Pie, 
+  Cell, 
+  AreaChart, 
+  Area 
+} from "recharts";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { 
   MessageSquare, 
@@ -27,6 +42,11 @@ import {
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { useToast } from "@/hooks/use-toast";
 import { v4 as uuidv4, generateMockData } from "@/utils/mockUtils";
+import { 
+  ChartContainer, 
+  ChartTooltip, 
+  ChartTooltipContent 
+} from "@/components/ui/chart";
 
 const Index = () => {
   const dispatch = useAppDispatch();
@@ -111,6 +131,14 @@ const Index = () => {
   const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
     if (e.key === 'Enter') {
       handleSubmitQuery();
+    }
+  };
+
+  // Chart configuration for shadcn/ui chart component
+  const chartConfig = {
+    primary: {
+      label: "Primary",
+      color: "#8884d8"
     }
   };
 
@@ -273,31 +301,35 @@ const Index = () => {
 
                         <div className="h-[400px] w-full">
                           <TabsContent value="bar">
-                            <ResponsiveContainer width="100%" height="100%">
+                            <ChartContainer config={chartConfig} className="h-full">
                               <BarChart data={result.data}>
                                 <CartesianGrid strokeDasharray="3 3" />
                                 <XAxis dataKey="name" />
                                 <YAxis />
-                                <Tooltip />
+                                <ChartTooltip
+                                  content={<ChartTooltipContent labelKey="name" />}
+                                />
                                 <Bar dataKey="value" fill="#8884d8" />
                               </BarChart>
-                            </ResponsiveContainer>
+                            </ChartContainer>
                           </TabsContent>
                           
                           <TabsContent value="line">
-                            <ResponsiveContainer width="100%" height="100%">
+                            <ChartContainer config={chartConfig} className="h-full">
                               <LineChart data={result.data}>
                                 <CartesianGrid strokeDasharray="3 3" />
                                 <XAxis dataKey="name" />
                                 <YAxis />
-                                <Tooltip />
+                                <ChartTooltip
+                                  content={<ChartTooltipContent labelKey="name" />}
+                                />
                                 <Line type="monotone" dataKey="value" stroke="#8884d8" />
                               </LineChart>
-                            </ResponsiveContainer>
+                            </ChartContainer>
                           </TabsContent>
                           
                           <TabsContent value="pie">
-                            <ResponsiveContainer width="100%" height="100%">
+                            <ChartContainer config={chartConfig} className="h-full">
                               <PieChart>
                                 <Pie
                                   data={result.data}
@@ -314,21 +346,25 @@ const Index = () => {
                                     <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
                                   ))}
                                 </Pie>
-                                <Tooltip />
+                                <ChartTooltip
+                                  content={<ChartTooltipContent labelKey="name" />}
+                                />
                               </PieChart>
-                            </ResponsiveContainer>
+                            </ChartContainer>
                           </TabsContent>
                           
                           <TabsContent value="area">
-                            <ResponsiveContainer width="100%" height="100%">
+                            <ChartContainer config={chartConfig} className="h-full">
                               <AreaChart data={result.data}>
                                 <CartesianGrid strokeDasharray="3 3" />
                                 <XAxis dataKey="name" />
                                 <YAxis />
-                                <Tooltip />
+                                <ChartTooltip
+                                  content={<ChartTooltipContent labelKey="name" />}
+                                />
                                 <Area type="monotone" dataKey="value" fill="#8884d8" stroke="#8884d8" />
                               </AreaChart>
-                            </ResponsiveContainer>
+                            </ChartContainer>
                           </TabsContent>
                         </div>
                       </Tabs>
