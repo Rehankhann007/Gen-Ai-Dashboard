@@ -1,6 +1,6 @@
-
 import { useState, useEffect } from "react";
-import { useAppDispatch, useAppSelector } from "@/hooks/useAppSelector";
+import { useAppDispatch } from "@/hooks/useAppDispatch";
+import { useAppSelector } from "@/hooks/useAppSelector";
 import { 
   setCurrentQuery, 
   submitQuery, 
@@ -25,8 +25,8 @@ import {
   Send
 } from "lucide-react";
 import { ScrollArea } from "@/components/ui/scroll-area";
-import { useToast } from "@/components/ui/toast";
-import { v4 as uuidv4 } from "@/utils/mockUtils";
+import { useToast } from "@/hooks/use-toast";
+import { v4 as uuidv4, generateMockData } from "@/utils/mockUtils";
 
 const Index = () => {
   const dispatch = useAppDispatch();
